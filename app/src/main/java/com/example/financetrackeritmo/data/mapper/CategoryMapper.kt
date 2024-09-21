@@ -3,8 +3,9 @@ package com.example.financetrackeritmo.data.mapper
 import com.example.financetrackeritmo.data.entity.CategoryDB
 import com.example.financetrackeritmo.domain.entity.Category
 import com.example.financetrackeritmo.domain.entity.TransactionType
+import javax.inject.Inject
 
-class CategoryMapper {
+class CategoryMapper @Inject constructor() {
 
     fun mapCategoryDaoToCategory(categoryEntity: CategoryDB): Category {
         return Category(
