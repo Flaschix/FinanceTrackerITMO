@@ -7,10 +7,13 @@ import com.example.financetrackeritmo.domain.repository.CategoryRepository
 import com.example.financetrackeritmo.utils.mergeWith
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.shareIn
 import kotlinx.coroutines.flow.stateIn
 import javax.inject.Inject
 
@@ -27,19 +30,20 @@ class CategoryRepositoryImpl @Inject constructor(
     private val categoryList: List<Category>
         get() = _categoryList.toList()
 
-    private val categories: StateFlow<List<Category>> = flow {
+    private val categories: SharedFlow<List<Category>> = flow {
         val listDao = categoryDao.getAllCategories()
         val result = mapper.mapListCategoryDaoToListCategory(listDao)
         _categoryList.addAll(result)
 
+        delay(3000)
+
         emit(categoryList)
-    }.mergeWith(refreshedListFlow).stateIn(
+    }.mergeWith(refreshedListFlow).shareIn(
         scope = coroutineScope,
         started = SharingStarted.Lazily,
-        initialValue = listOf()
     )
 
-    override suspend fun getAllCategory(): StateFlow<List<Category>> = categories
+    override suspend fun getAllCategory(): SharedFlow<List<Category>> = categories
 
     override suspend fun addCategory(category: Category) {
         val item = mapper.mapCategoryToCategoryDao(category)
