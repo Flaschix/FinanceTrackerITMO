@@ -11,8 +11,22 @@
         android:label="fragment_dashboard"
         tools:layout="@layout/fragment_dashboard" />
     <fragment
-        android:id="@+id/categoryFragment"
-        android:name="com.example.financetrackeritmo.presentation.category.CategoryFragment"
+        android:id="@+id/categoryListFragment"
+        android:name="com.example.financetrackeritmo.presentation.category.CategoryListFragment"
         android:label="fragment_category"
-        tools:layout="@layout/fragment_category" />
+        tools:layout="@layout/fragment_category_list" >
+        <action
+            android:id="@+id/action_categoryListFragment_to_categoryFragment"
+            app:destination="@id/categoryFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/categoryFragment"
+        android:name="com.example.financetrackeritmo.presentation.category.item.CategoryFragment"
+        android:label="fragment_category"
+        tools:layout="@layout/fragment_category" >
+        <argument
+            android:name="category"
+            app:argType="com.example.financetrackeritmo.domain.entity.Category"
+            app:nullable="true" />
+    </fragment>
 </navigation>
