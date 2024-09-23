@@ -1,5 +1,7 @@
 package com.example.financetrackeritmo.presentation.category.item
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.financetrackeritmo.domain.entity.Category
@@ -17,9 +19,15 @@ class CategoryViewModel @Inject constructor(
     private val updateCategoryUseCase: UpdateCategoryUseCase,
 ): ViewModel() {
 
+    private val _errorMessage = MutableLiveData<String>()
+    val errorMessage: LiveData<String> get() = _errorMessage
+
     fun addNewCategory(name: String, type: TransactionType){
         viewModelScope.launch {
-            addCategoryUseCase(Category(name = name, type = type))
+            val result = addCategoryUseCase(Category(name = name, type = type))
+            if (result.isFailure) {
+                _errorMessage.value = result.exceptionOrNull()?.message
+            }
         }
     }
 

@@ -22,7 +22,7 @@ object DaoModule {
             context,
             TrackerDatabase::class.java,
             "trackerDatabase.db"
-        ).build()
+        ).fallbackToDestructiveMigration().build()
     }
 
     @Provides
