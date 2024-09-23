@@ -31,9 +31,12 @@ class CategoryViewModel @Inject constructor(
         }
     }
 
-    fun editCategory(name: String, type: TransactionType){
+    fun editCategory(id: Long, name: String, type: TransactionType){
         viewModelScope.launch {
-            updateCategoryUseCase(Category(name = name, type = type))
+            val result = updateCategoryUseCase(Category(id = id, name = name, type = type))
+            if (result.isFailure) {
+                _errorMessage.value = result.exceptionOrNull()?.message
+            }
         }
     }
 }

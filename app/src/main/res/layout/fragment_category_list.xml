@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".presentation.category.CategoryListFragment">
 
 
@@ -11,9 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="+ Новая транзакция"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginTop="16dp"/>
+        android:layout_margin="16dp"/>
 
     <ProgressBar
         android:id="@+id/pbCategory"
@@ -23,4 +22,11 @@
         android:scaleX="0.2"
         android:scaleY="0.2"
         android:visibility="gone"/>
-</FrameLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvCategoryList"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="16dp"
+        tools:listitem="@layout/rv_category_list"/>
+</LinearLayout>

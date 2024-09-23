@@ -2,6 +2,8 @@ package com.example.financetrackeritmo.presentation.category
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.financetrackeritmo.domain.entity.Category
+import com.example.financetrackeritmo.domain.usecase.DeleteCategoryUseCase
 import com.example.financetrackeritmo.domain.usecase.GetAllCategoryUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -15,6 +17,7 @@ import javax.inject.Inject
 @HiltViewModel
 class CategoryListViewModel @Inject constructor(
     private val getAllCategoryUseCase: GetAllCategoryUseCase,
+    private val deleteCategoryUseCase: DeleteCategoryUseCase
 ): ViewModel() {
 
 
@@ -31,6 +34,12 @@ class CategoryListViewModel @Inject constructor(
             }.collect{
                 _uiState.value = it
             }
+        }
+    }
+
+    fun deleteCategory(category: Category){
+        viewModelScope.launch {
+            deleteCategoryUseCase(category)
         }
     }
 }

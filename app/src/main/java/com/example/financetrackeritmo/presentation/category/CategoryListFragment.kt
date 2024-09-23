@@ -6,12 +6,15 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.financetrackeritmo.databinding.FragmentCategoryListBinding
 import com.example.financetrackeritmo.domain.entity.Category
 import dagger.hilt.android.AndroidEntryPoint
@@ -26,6 +29,10 @@ class CategoryListFragment : Fragment() {
         get() = _binding ?: throw Exception("FragmentCategoryListBinding === null")
 
     private val viewModel by viewModels<CategoryListViewModel>()
+
+    private val categoryListAdapter by lazy {
+        CategoryListAdapter()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -52,10 +59,27 @@ class CategoryListFragment : Fragment() {
                         is CategoryListScreenState.Success -> {
                             successStateView()
                             setUpView(it.categories)
+                            setUpRV()
+                            categoryListAdapter.submitList(it.categories)
                         }
                     }
                 }
             }
+        }
+    }
+
+    private fun setUpRV() {
+        binding.rvCategoryList.apply {
+            layoutManager = LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
+            adapter = categoryListAdapter
+        }
+
+        categoryListAdapter.editClickListener = {
+            findNavController().navigate(CategoryListFragmentDirections.actionCategoryListFragmentToCategoryFragment(it))
+        }
+
+        categoryListAdapter.deleteClickListener = {
+            viewModel.deleteCategory(it)
         }
     }
 

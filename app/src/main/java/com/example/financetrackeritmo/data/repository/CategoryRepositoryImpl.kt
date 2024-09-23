@@ -1,5 +1,6 @@
 package com.example.financetrackeritmo.data.repository
 
+import android.util.Log
 import com.example.financetrackeritmo.data.dao.CategoryDao
 import com.example.financetrackeritmo.data.mapper.CategoryMapper
 import com.example.financetrackeritmo.domain.entity.Category
@@ -65,8 +66,9 @@ class CategoryRepositoryImpl @Inject constructor(
 
         categoryDao.deleteCategory(item)
 
-        val index = categoryList.indexOfFirst { it.id == category.id }
-        _categoryList.drop(index)
+        _categoryList.removeIf { it.id == category.id }
+
+        refreshedListFlow.emit(categoryList)
 
         return Result.success(Unit)
     }
@@ -74,9 +76,12 @@ class CategoryRepositoryImpl @Inject constructor(
     override suspend fun updateCategory(category: Category): Result<Unit> {
         val itemFromBd = categoryDao.getCategoryByName(category.name)
 
-        if(itemFromBd != null) return Result.failure(Exception("Category with name ${category.name} already exists"))
+        if(itemFromBd != null && itemFromBd.id != category.id) return Result.failure(Exception("Category with name ${category.name} already exists"))
 
         val item = mapper.mapCategoryToCategoryDao(category)
+
+        Log.d("TEST", "category $category")
+        Log.d("TEST", "item $item")
 
         categoryDao.updateCategory(item)
 
