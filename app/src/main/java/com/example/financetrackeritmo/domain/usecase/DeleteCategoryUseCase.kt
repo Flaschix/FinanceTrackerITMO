@@ -5,7 +5,7 @@ import com.example.financetrackeritmo.domain.repository.CategoryRepository
 import javax.inject.Inject
 
 class DeleteCategoryUseCase @Inject constructor(private val repository: CategoryRepository) {
-    suspend operator fun invoke(category: Category) {
-        repository.deleteCategory(category)
+    suspend operator fun invoke(category: Category): Result<Unit> {
+        return repository.deleteCategory(category)
     }
 }

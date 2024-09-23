@@ -45,27 +45,37 @@ class CategoryRepositoryImpl @Inject constructor(
 
     override suspend fun getAllCategory(): SharedFlow<List<Category>> = categories
 
-    override suspend fun addCategory(category: Category) {
+    override suspend fun addCategory(category: Category): Result<Unit> {
+        val itemFromBd = categoryDao.getCategoryByName(category.name)
+
+        if(itemFromBd != null) return Result.failure(Exception("Category with name ${category.name} already exists"))
+
         val item = mapper.mapCategoryToCategoryDao(category)
 
-        categoryDao.insertCategory(item)
+        val generatedId = categoryDao.insertCategory(item)
 
-        _categoryList.add(category)
+        _categoryList.add(category.copy(id = generatedId))
         refreshedListFlow.emit(categoryList)
+
+        return Result.success(Unit)
     }
 
-    override suspend fun deleteCategory(category: Category) {
+    override suspend fun deleteCategory(category: Category): Result<Unit> {
         val item = mapper.mapCategoryToCategoryDao(category)
 
         categoryDao.deleteCategory(item)
+
+        return Result.success(Unit)
     }
 
-    override suspend fun updateCategory(category: Category) {
+    override suspend fun updateCategory(category: Category): Result<Unit> {
         val item = mapper.mapCategoryToCategoryDao(category)
 
-        categoryDao.insertCategory(item)
+        categoryDao.updateCategory(item)
 
-        _categoryList.map { if(it.id == category.id) it.copy(name = category.name, type = category.type) else it }
+        _categoryList.replaceAll { if (it.id == category.id) category else it }
         refreshedListFlow.emit(categoryList)
+
+        return Result.success(Unit)
     }
 }
