@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:title="Dashboard"
-        android:icon="@drawable/ic_launcher_background"
+        android:icon="@drawable/dashboard_icon"
         android:id="@+id/dashboardFragment"/>
 
     <item android:title="Category"
-        android:icon="@drawable/ic_launcher_background"
-        android:id="@+id/categoryFragment"/>
+        android:icon="@drawable/category_icon"
+        android:id="@+id/categoryListFragment"/>
 </menu>
