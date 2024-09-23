@@ -1,6 +1,7 @@
 package com.example.financetrackeritmo.presentation.category.item
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -56,7 +57,15 @@ class CategoryFragment : Fragment() {
 
             tiedName.setText(category.name)
 
+            btnConfirm.setOnClickListener {
+                val name = tiedName.text.toString()
+                val type = if(switchType.isChecked) TransactionType.INCOME else TransactionType.EXPENSE
 
+                Log.d("TEST", "setUpEditMode: $category")
+                Log.d("TEST", "setUpEditMode: $name")
+
+                viewModel.editCategory(category.id, name, type)
+            }
         }
     }
 
