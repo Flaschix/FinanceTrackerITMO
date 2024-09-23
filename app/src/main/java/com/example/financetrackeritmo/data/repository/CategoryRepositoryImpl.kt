@@ -65,10 +65,17 @@ class CategoryRepositoryImpl @Inject constructor(
 
         categoryDao.deleteCategory(item)
 
+        val index = categoryList.indexOfFirst { it.id == category.id }
+        _categoryList.drop(index)
+
         return Result.success(Unit)
     }
 
     override suspend fun updateCategory(category: Category): Result<Unit> {
+        val itemFromBd = categoryDao.getCategoryByName(category.name)
+
+        if(itemFromBd != null) return Result.failure(Exception("Category with name ${category.name} already exists"))
+
         val item = mapper.mapCategoryToCategoryDao(category)
 
         categoryDao.updateCategory(item)
