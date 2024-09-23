@@ -6,7 +6,7 @@ import java.time.LocalDate
 
 @Entity(tableName = "transactions")
 data class TransactionDB (
-    @PrimaryKey(autoGenerate = true) val id: Long = 0,
+    @PrimaryKey(autoGenerate = true) val id: Long,
     val categoryId: Long,
     val amount: Double,
     val date: LocalDate,

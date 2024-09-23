@@ -1,5 +1,9 @@
 package com.example.financetrackeritmo.domain.entity
 
-enum class TransactionType {
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
+enum class TransactionType : Parcelable {
     INCOME, EXPENSE
 }

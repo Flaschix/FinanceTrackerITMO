@@ -5,6 +5,7 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.Update
 import com.example.financetrackeritmo.data.entity.CategoryDB
 
 @Dao
@@ -13,11 +14,14 @@ interface CategoryDao {
     fun getAllCategories(): List<CategoryDB>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertCategory(category: CategoryDB)
+    suspend fun insertCategory(category: CategoryDB): Long
 
     @Delete
     suspend fun deleteCategory(category: CategoryDB)
 
-    @Query("SELECT * FROM categories WHERE id=:categoryId")
-    fun getCategoryById(categoryId: Long): CategoryDB?
+    @Update
+    suspend fun updateCategory(category: CategoryDB)
+
+    @Query("SELECT * FROM categories WHERE name=:categoryName")
+    suspend fun getCategoryByName(categoryName: String): CategoryDB?
 }

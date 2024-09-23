@@ -5,7 +5,7 @@ import com.example.financetrackeritmo.domain.repository.CategoryRepository
 import javax.inject.Inject
 
 class AddCategoryUseCase @Inject constructor(private val repository: CategoryRepository) {
-    suspend operator fun invoke(category: Category){
-        repository.addCategory(category)
+    suspend operator fun invoke(category: Category): Result<Unit> {
+        return repository.addCategory(category)
     }
 }

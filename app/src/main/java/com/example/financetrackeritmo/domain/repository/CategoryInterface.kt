@@ -8,9 +8,9 @@ interface CategoryRepository {
 
     suspend fun getAllCategory(): SharedFlow<List<Category>>
 
-    suspend fun addCategory(category: Category)
+    suspend fun addCategory(category: Category): Result<Unit>
 
-    suspend fun deleteCategory(category: Category)
+    suspend fun deleteCategory(category: Category): Result<Unit>
 
-    suspend fun updateCategory(category: Category)
+    suspend fun updateCategory(category: Category): Result<Unit>
 }
