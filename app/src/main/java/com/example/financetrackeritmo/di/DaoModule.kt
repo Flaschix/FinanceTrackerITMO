@@ -18,7 +18,7 @@ object DaoModule {
 
     @Provides
     @Singleton
-    fun provideCategoryDatabase(@ApplicationContext context: Context): TrackerDatabase{
+    fun provideTrackerDatabase(@ApplicationContext context: Context): TrackerDatabase{
         return Room.databaseBuilder(
             context,
             TrackerDatabase::class.java,
@@ -30,16 +30,6 @@ object DaoModule {
     @Singleton
     fun provideCategoryDao(trackerDatabase: TrackerDatabase): CategoryDao{
         return trackerDatabase.getCategoryDao()
-    }
-
-    @Provides
-    @Singleton
-    fun provideTransactionDatabase(@ApplicationContext context: Context): TrackerDatabase{
-        return Room.databaseBuilder(
-            context,
-            TrackerDatabase::class.java,
-            "trackerDatabase.db"
-        ).fallbackToDestructiveMigration().build()
     }
 
     @Provides

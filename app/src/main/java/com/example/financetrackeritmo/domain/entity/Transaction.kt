@@ -2,13 +2,13 @@ package com.example.financetrackeritmo.domain.entity
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
-import java.time.LocalDate
+import java.util.Date
 
 @Parcelize
 data class Transaction (
     val id: Long = 0,
     val categoryId: Long,
     val amount: Double,
-    val date: LocalDate,
+    val date: Date,
     val note: String
 ) : Parcelable
