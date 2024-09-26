@@ -8,11 +8,15 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.navArgs
 import com.example.financetrackeritmo.databinding.FragmentCategoryBinding
 import com.example.financetrackeritmo.domain.entity.Category
 import com.example.financetrackeritmo.domain.entity.TransactionType
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class CategoryFragment : Fragment() {
@@ -38,7 +42,6 @@ class CategoryFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         setUpView()
-        observeViewModel()
     }
 
     private fun setUpView() {
@@ -46,6 +49,23 @@ class CategoryFragment : Fragment() {
 
         if(category == null) setUpAddMode()
         else setUpEditMode(category)
+
+        observeValidation()
+    }
+
+    private fun observeValidation() {
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.validateState.collect {
+                    if (it.name is CategoryValidateState.Error) {
+                        binding.tiedName.apply {
+                            requestFocus()
+                            error = it.name.msg
+                        }
+                    }
+                }
+            }
+        }
     }
 
     private fun setUpEditMode(category: Category) {
@@ -61,9 +81,6 @@ class CategoryFragment : Fragment() {
                 val name = tiedName.text.toString()
                 val type = if(switchType.isChecked) TransactionType.INCOME else TransactionType.EXPENSE
 
-                Log.d("TEST", "setUpEditMode: $category")
-                Log.d("TEST", "setUpEditMode: $name")
-
                 viewModel.editCategory(category.id, name, type)
             }
         }
@@ -77,14 +94,6 @@ class CategoryFragment : Fragment() {
                 val type = if(switchType.isChecked) TransactionType.INCOME else TransactionType.EXPENSE
 
                 viewModel.addNewCategory(name, type)
-            }
-        }
-    }
-
-    private fun observeViewModel() {
-        viewModel.errorMessage.observe(viewLifecycleOwner) { message ->
-            message?.let {
-                Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
             }
         }
     }
