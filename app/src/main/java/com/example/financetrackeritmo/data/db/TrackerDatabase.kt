@@ -10,7 +10,7 @@ import com.example.financetrackeritmo.data.entity.ConvertersTransactionDate
 import com.example.financetrackeritmo.data.entity.TransactionDB
 
 //База данных. Сюда нужно будет добавить ещё транзакции (при каждом изменении бд, нужно менять его версию)
-@Database(entities = [CategoryDB::class, TransactionDB::class], version = 2)
+@Database(entities = [CategoryDB::class, TransactionDB::class], version = 3)
 @TypeConverters(ConvertersTransactionDate::class)
 abstract class TrackerDatabase: RoomDatabase() {
 
