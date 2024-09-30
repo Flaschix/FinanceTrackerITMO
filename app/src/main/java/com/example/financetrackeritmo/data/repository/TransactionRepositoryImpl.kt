@@ -59,7 +59,7 @@ class TransactionRepositoryImpl @Inject constructor(
 
         transactionDao.deleteTransaction(item)
 
-        val index = transactionList.indexOfFirst { it.id == item.id }
+        val index = transactionList.indexOfFirst { it.id == item.transactionId }
         _transactionList.drop(index)
 
         return Result.success(Unit)

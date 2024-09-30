@@ -1,16 +1,17 @@
 package com.example.financetrackeritmo.data.entity
 
+import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverter
+import com.example.financetrackeritmo.domain.entity.Category
 import java.time.LocalDate
 import java.time.ZoneId
-import java.util.Date
 
 @Entity(tableName = "transactions")
 data class TransactionDB (
-    @PrimaryKey(autoGenerate = true) val id: Long,
-    val categoryName: String,
+    @PrimaryKey(autoGenerate = true) val transactionId: Long,
+    @Embedded val category: Category,
     val amount: Double,
     val date: LocalDate,
     val note: String

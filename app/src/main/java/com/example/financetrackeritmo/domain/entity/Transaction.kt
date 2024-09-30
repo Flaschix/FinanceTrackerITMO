@@ -7,7 +7,7 @@ import java.time.LocalDate
 @Parcelize
 data class Transaction (
     val id: Long = 0,
-    val categoryName: String, // it's unique so can be used as a primary key
+    val category: Category,
     val amount: Double,
     val date: LocalDate,
     val note: String

@@ -2,12 +2,16 @@ package com.example.financetrackeritmo.presentation.transaction.item
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.financetrackeritmo.domain.entity.Category
 import com.example.financetrackeritmo.domain.entity.Transaction
 import com.example.financetrackeritmo.domain.usecase.AddTransactionUseCase
+import com.example.financetrackeritmo.domain.usecase.GetAllCategoryUseCase
 import com.example.financetrackeritmo.domain.usecase.UpdateTransactionUseCase
-import com.example.financetrackeritmo.presentation.category.item.CategoryValidateState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import java.time.LocalDate
@@ -17,19 +21,32 @@ import javax.inject.Inject
 @HiltViewModel
 class TransactionViewModel @Inject constructor(
     private val addTransactionUseCase: AddTransactionUseCase,
-    private val updateTransactionUseCase: UpdateTransactionUseCase
+    private val updateTransactionUseCase: UpdateTransactionUseCase,
+    private val getAllCategoryUseCase: GetAllCategoryUseCase
 ) : ViewModel() {
 
     private val _validation = Channel<TransactionFieldsState>()
     val validateState = _validation.receiveAsFlow()
 
-    fun saveTransaction(categoryName: String, date: String, amount: String, note: String) {
+    private val _categories = MutableStateFlow<List<Category>>(emptyList())
+    val categories: StateFlow<List<Category>> = _categories
+
+
+    fun fetchCategories() {
+        viewModelScope.launch {
+            val categories = getAllCategoryUseCase().first()
+            _categories.emit(categories)
+        }
+    }
+
+    fun addNewTransaction(category: Category, amount: String, date: String, note: String) {
+
         if (validateTransaction(date, amount)) {
 
             viewModelScope.launch {
                 val result = addTransactionUseCase(
                     Transaction(
-                        categoryName = categoryName,
+                        category = category,
                         date = LocalDate.parse(date, DateTimeFormatter.ofPattern("dd/MM/yyyy")),
                         amount = amount.toDouble(),
                         note = note
@@ -44,7 +61,7 @@ class TransactionViewModel @Inject constructor(
 
     fun editTransaction(
         id: Long,
-        categoryName: String,
+        category: Category,
         date: String,
         amount: String,
         note: String
@@ -55,7 +72,7 @@ class TransactionViewModel @Inject constructor(
                 val result = updateTransactionUseCase(
                     Transaction(
                         id = id,
-                        categoryName = categoryName,
+                        category = category,
                         date = LocalDate.parse(date, DateTimeFormatter.ofPattern("dd/MM/yyyy")),
                         amount = amount.toDouble(),
                         note = note
@@ -66,14 +83,6 @@ class TransactionViewModel @Inject constructor(
 
         } else failedValidation(date, amount)
 
-    }
-
-    private fun validateName(name: String): CategoryValidateState {
-        if (name.isEmpty()) return CategoryValidateState.Error("Fill this field")
-        if (name.startsWith(" ") || name.endsWith(" ")) return CategoryValidateState
-            .Error("the title cannot contain a space at the beginning or at the end")
-
-        return CategoryValidateState.Success
     }
 
     private fun failedValidation(date: String, amount: String) {
@@ -87,8 +96,7 @@ class TransactionViewModel @Inject constructor(
         }
     }
 
-
-    fun validateTransaction(date: String, amount: String): Boolean {
+    private fun validateTransaction(date: String, amount: String): Boolean {
         val dateValidation = validateDate(date)
         val amountValidation = validateAmount(amount)
 
@@ -102,6 +110,7 @@ class TransactionViewModel @Inject constructor(
         } catch (ex: Exception) {
             return TransactionValidateState.Error("Date corrupted")
         }
+
         return TransactionValidateState.Success
     }
 

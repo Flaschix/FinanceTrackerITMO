@@ -19,7 +19,7 @@ class TransactionListAdapter : ListAdapter<Transaction, TransactionListAdapter.T
     inner class TransactionListViewHolder(val binding: RvTransactionListBinding): ViewHolder(binding.root){
         fun bind(transaction: Transaction){
             binding.apply {
-                categoryName.text = transaction.categoryName
+                categoryName.text = transaction.category.name
                 transactionDate.text = transaction.date.toString()
                 transactionAmount.text = transaction.amount.toString()
             }
