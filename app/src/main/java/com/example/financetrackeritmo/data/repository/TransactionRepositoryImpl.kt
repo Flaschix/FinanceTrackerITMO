@@ -38,7 +38,8 @@ class TransactionRepositoryImpl @Inject constructor(
         emit(transactionList)
     }.mergeWith(refreshedListFlow).shareIn(
         scope = coroutineScope,
-        started = SharingStarted.Lazily
+        started = SharingStarted.WhileSubscribed(5000),
+        replay = 1
     )
 
     override suspend fun getAllTransaction(): SharedFlow<List<Transaction>> = transactions

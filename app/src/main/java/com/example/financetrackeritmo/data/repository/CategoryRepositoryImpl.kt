@@ -41,7 +41,8 @@ class CategoryRepositoryImpl @Inject constructor(
         emit(categoryList)
     }.mergeWith(refreshedListFlow).shareIn(
         scope = coroutineScope,
-        started = SharingStarted.Lazily,
+        started = SharingStarted.WhileSubscribed(5000),
+        replay = 1
     )
 
     override suspend fun getAllCategory(): SharedFlow<List<Category>> = categories
