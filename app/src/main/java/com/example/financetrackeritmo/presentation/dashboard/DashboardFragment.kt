@@ -10,8 +10,15 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.financetrackeritmo.R
 import com.example.financetrackeritmo.databinding.FragmentDashboardBinding
+import com.example.financetrackeritmo.domain.entity.Category
+import com.example.financetrackeritmo.domain.entity.Transaction
+import com.example.financetrackeritmo.domain.entity.TransactionType
+import com.example.financetrackeritmo.presentation.category.CategoryListFragmentDirections
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -55,11 +62,48 @@ class DashboardFragment : Fragment() {
                         }
                         is DashboardScreenState.Success -> {
                             successStateView()
+
+                            setUpRV()
+
+                            setUpView(it.totalIncome, it.totalExpense, it.categories, it.transactions, it.isIncomeMode)
                         }
                     }
 
                 }
             }
+        }
+    }
+
+    private fun setUpView(
+        totalIncome: Double,
+        totalExpense: Double,
+        categoryList: List<Category>,
+        transactionList: List<Transaction>,
+        mode: Boolean
+    ) {
+
+        val filteredCategories = categoryList.filter {
+            it.type == if (mode) TransactionType.INCOME else TransactionType.EXPENSE
+        }
+
+        val categoryAmounts = filteredCategories.map { category ->
+            val totalAmount = transactionList.filter { it.category.id == category.id }
+                .sumOf { it.amount }
+            val percentage = if (mode) {
+                (totalAmount / totalIncome) * 100
+            } else {
+                (totalAmount / totalExpense) * 100
+            }
+            CategoryAmount(category.name, percentage, totalAmount)
+        }
+
+        dashboardAdapter.submitList(categoryAmounts)
+    }
+
+    private fun setUpRV() {
+        binding.rvDashboard.apply {
+            layoutManager = LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
+            adapter = dashboardAdapter
         }
     }
 
@@ -79,8 +123,6 @@ class DashboardFragment : Fragment() {
             switchMode.visibility = View.GONE
             rvDashboard.visibility = View.GONE
         }
-
-
     }
 
 
