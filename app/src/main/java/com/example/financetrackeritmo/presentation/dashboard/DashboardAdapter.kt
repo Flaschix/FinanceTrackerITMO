@@ -13,9 +13,11 @@ class DashboardAdapter: ListAdapter<CategoryAmount, DashboardAdapter.DashboardVi
 
     inner class DashboardViewHolder(val binding: RvDashboardBinding): ViewHolder(binding.root){
         fun bind(categoryAmount: CategoryAmount){
-            binding.tvCategoryName.text = categoryAmount.name
-            binding.tvCategoryAmount.text = categoryAmount.amount.toString()
-            binding.tvCategoryPercentage.text = categoryAmount.percentage.toString()
+            binding.apply {
+                tvCategoryName.text = categoryAmount.name
+                tvCategoryAmount.text = categoryAmount.amount.toString()
+                tvCategoryPercentage.text = categoryAmount.percentage.toString()
+            }
         }
     }
 
