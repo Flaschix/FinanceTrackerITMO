@@ -60,9 +60,10 @@ class TransactionFragment @Inject constructor() : Fragment() {
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.categories.collect { categories ->
-                    Log.d("DB", "Got categories $categories")
-                    updateSpinner(categories)
+                viewModel.categories.collect { list ->
+                    Log.d("DB", "Got categories $list")
+                    updateSpinner(list)
+                    categories = list
                 }
             }
         }
@@ -88,12 +89,16 @@ class TransactionFragment @Inject constructor() : Fragment() {
     private fun setUpAddMode() {
         binding.apply {
             btnConfirm.setOnClickListener {
-                val category = spinnerCategory.selectedItem as Category
+                Log.d("TEST", "categories: $categories")
+
+                val category = categories.find { spinnerCategory.selectedItem.toString() == it.name }
                 val amount = editAmount.text.toString()
                 val dateString = editTextDate.text.toString()
                 val note = editNote.text.toString()
 
-                viewModel.addNewTransaction(category, amount, dateString, note)
+                Log.d("TEST", "category: $category")
+
+                if(category != null) viewModel.addNewTransaction(category, amount, dateString, note)
             }
         }
     }
