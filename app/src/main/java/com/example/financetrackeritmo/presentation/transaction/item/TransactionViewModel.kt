@@ -46,7 +46,7 @@ class TransactionViewModel @Inject constructor(
             viewModelScope.launch {
                 val result = addTransactionUseCase(
                     Transaction(
-                        category = category,
+                        categoryId = category.id,
                         date = LocalDate.parse(date, DateTimeFormatter.ofPattern("dd/MM/yyyy")),
                         amount = amount.toDouble(),
                         note = note
@@ -72,7 +72,7 @@ class TransactionViewModel @Inject constructor(
                 val result = updateTransactionUseCase(
                     Transaction(
                         id = id,
-                        category = category,
+                        categoryId = category.id,
                         date = LocalDate.parse(date, DateTimeFormatter.ofPattern("dd/MM/yyyy")),
                         amount = amount.toDouble(),
                         note = note

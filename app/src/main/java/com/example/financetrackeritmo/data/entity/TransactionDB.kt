@@ -11,7 +11,7 @@ import java.time.ZoneId
 @Entity(tableName = "transactions")
 data class TransactionDB (
     @PrimaryKey(autoGenerate = true) val transactionId: Long,
-    @Embedded val category: Category,
+    val categoryId: Long,
     val amount: Double,
     val date: LocalDate,
     val note: String
