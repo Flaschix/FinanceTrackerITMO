@@ -52,10 +52,6 @@ class TransactionFragment @Inject constructor() : Fragment() {
             showDatePickerDialog()
         }
 
-        binding.btnConfirm.setOnClickListener {
-            onConfirmButtonClicked()
-        }
-
         viewModel.fetchCategories()
 
         viewLifecycleOwner.lifecycleScope.launch {
@@ -72,7 +68,10 @@ class TransactionFragment @Inject constructor() : Fragment() {
     }
 
     private fun updateSpinner(categories: List<Category>) {
-        val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, categories.map { it.name })
+        val adapter = ArrayAdapter(
+            requireContext(),
+            android.R.layout.simple_spinner_item,
+            categories.map { it.name })
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         binding.spinnerCategory.adapter = adapter
     }
@@ -84,6 +83,8 @@ class TransactionFragment @Inject constructor() : Fragment() {
         else setUpEditMode(transaction)
 
         observeValidation()
+
+        observeOperationSuccess()
     }
 
     private fun setUpAddMode() {
@@ -91,14 +92,15 @@ class TransactionFragment @Inject constructor() : Fragment() {
             btnConfirm.setOnClickListener {
                 Log.d("TEST", "categories: $categories")
 
-                val category = categories.find { spinnerCategory.selectedItem.toString() == it.name }
+                val category =
+                    categories.find { spinnerCategory.selectedItem.toString() == it.name }
                 val amount = editAmount.text.toString()
                 val dateString = editTextDate.text.toString()
                 val note = editNote.text.toString()
 
                 Log.d("TEST", "category: $category")
 
-                if(category != null) viewModel.addNewTransaction(category, amount, dateString, note)
+                if (category != null) viewModel.addNewTransaction(category, amount, dateString, note)
             }
         }
     }
@@ -148,21 +150,15 @@ class TransactionFragment @Inject constructor() : Fragment() {
         datePickerDialog.show()
     }
 
-    private fun onConfirmButtonClicked() {
-        val selectedCategoryName = binding.spinnerCategory.selectedItem.toString()
-        val selectedCategory = categories.find { it.name == selectedCategoryName }
-        val date = binding.editTextDate.text.toString()
-        val amountText = binding.editAmount.text.toString()
-        val note = binding.editNote.text.toString()
-
-        if (selectedCategory != null) {
-            viewModel.addNewTransaction(selectedCategory, date, amountText, note)
-
-            // Navigate back or show a success message
-            findNavController().navigateUp()
-        } else {
-            // Show an error message if the category is not found
-            Toast.makeText(requireContext(), "Category not found", Toast.LENGTH_SHORT).show()
+    private fun observeOperationSuccess() {
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.operationSuccess.collect { success ->
+                    if (success) {
+                        findNavController().popBackStack()
+                    }
+                }
+            }
         }
     }
 
@@ -189,7 +185,8 @@ class TransactionFragment @Inject constructor() : Fragment() {
                         date, amountText, note
                     )
                 } else {
-                    Toast.makeText(requireContext(), "Category not found", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "Category not found", Toast.LENGTH_SHORT)
+                        .show()
                 }
             }
         }
