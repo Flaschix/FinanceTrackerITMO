@@ -23,4 +23,25 @@ interface TransactionDao {
 
     @Query("SELECT * FROM transactions WHERE transactionId=:transactionId")
     suspend fun getTransactionById(transactionId: Long): TransactionDB?
+
+    @Query("DELETE FROM transactions WHERE categoryid = :categoryId")
+    suspend fun deleteTransactionsByCategory(categoryId: Long)
+
+    @Query("""
+        SELECT 
+            COALESCE(SUM(t.amount), 0) 
+        FROM transactions t
+        JOIN categories c ON t.categoryId = c.id
+        WHERE c.type = 'INCOME'
+    """)
+    suspend fun getIncome(): Double
+
+    @Query("""
+        SELECT 
+            COALESCE(SUM(t.amount), 0) 
+        FROM transactions t
+        JOIN categories c ON t.categoryId = c.id
+        WHERE c.type = 'EXPENSE'
+    """)
+    suspend fun getExpense(): Double
 }
