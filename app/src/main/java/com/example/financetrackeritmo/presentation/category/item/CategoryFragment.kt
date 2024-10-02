@@ -11,6 +11,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.financetrackeritmo.databinding.FragmentCategoryBinding
 import com.example.financetrackeritmo.domain.entity.Category
@@ -51,6 +52,8 @@ class CategoryFragment : Fragment() {
         else setUpEditMode(category)
 
         observeValidation()
+
+        observeOperationSuccess()
     }
 
     private fun observeValidation() {
@@ -62,6 +65,18 @@ class CategoryFragment : Fragment() {
                             requestFocus()
                             error = it.name.msg
                         }
+                    }
+                }
+            }
+        }
+    }
+
+    private fun observeOperationSuccess() {
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.operationSuccess.collect { success ->
+                    if (success) {
+                        findNavController().popBackStack()
                     }
                 }
             }
