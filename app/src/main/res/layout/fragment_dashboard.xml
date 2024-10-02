@@ -22,6 +22,12 @@
         android:text="Switch Mode"
         android:layout_margin="16dp"/>
 
+    <com.github.mikephil.charting.charts.PieChart
+        android:id="@+id/pieChart"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:layout_margin="16dp"/>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvDashboard"
         android:layout_width="match_parent"
