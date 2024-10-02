@@ -12,4 +12,6 @@ interface CategoryRepository {
     suspend fun deleteCategory(category: Category): Result<Unit>
 
     suspend fun updateCategory(category: Category): Result<Unit>
+
+    suspend fun getCategoryNameById(categoryId: Long): String
 }

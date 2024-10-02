@@ -2,6 +2,7 @@ package com.example.financetrackeritmo.data.repository
 
 import com.example.financetrackeritmo.data.dao.CategoryDao
 import com.example.financetrackeritmo.data.dao.TransactionDao
+import com.example.financetrackeritmo.data.entity.CategoryDB
 import com.example.financetrackeritmo.data.mapper.CategoryMapper
 import com.example.financetrackeritmo.domain.entity.Category
 import com.example.financetrackeritmo.domain.repository.CategoryRepository
@@ -97,5 +98,15 @@ class CategoryRepositoryImpl @Inject constructor(
         transactionRepository.refreshTransactions()
 
         return Result.success(Unit)
+    }
+
+    override suspend fun getCategoryNameById(categoryId: Long): String {
+        val itemFromBd = categoryDao.getCategoryById(categoryId)
+        return if (itemFromBd != null) {
+            val item = mapper.mapCategoryDaoToCategory(itemFromBd)
+            item.name
+        } else {
+            "Unknown Category"
+        }
     }
 }
