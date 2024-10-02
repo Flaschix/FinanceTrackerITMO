@@ -12,6 +12,9 @@ import com.example.financetrackeritmo.domain.usecase.GetAllCategoryUseCase
 import com.example.financetrackeritmo.domain.usecase.UpdateCategoryUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -25,13 +28,16 @@ class CategoryViewModel @Inject constructor(
     private val _validation = Channel<CategoryFieldsState>()
     val validateState = _validation.receiveAsFlow()
 
+    private val _operationSuccess = MutableStateFlow(false)
+    val operationSuccess = _operationSuccess.asStateFlow()
+
     fun addNewCategory(name: String, type: TransactionType){
         if(validateFields(name)){
 
             viewModelScope.launch {
                 val result = addCategoryUseCase(Category(name = name, type = type))
                 if (result.isFailure) nameExisted()
-
+                else _operationSuccess.value = true
             }
 
         } else failedValidation(name)
@@ -43,6 +49,7 @@ class CategoryViewModel @Inject constructor(
             viewModelScope.launch {
                 val result = updateCategoryUseCase(Category(id = id, name = name, type = type))
                 if (result.isFailure) nameExisted()
+                else _operationSuccess.value = true
             }
 
         } else failedValidation(name)
