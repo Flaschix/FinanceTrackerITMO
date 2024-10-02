@@ -168,8 +168,8 @@ class TransactionFragment @Inject constructor() : Fragment() {
 
     private fun setUpEditMode(transaction: Transaction) {
         binding.apply {
-            val categoryName = transaction.category.name
-            val categoryIndex = categories.indexOfFirst { it.name == categoryName }
+            val categoryId = transaction.categoryId
+            val categoryIndex = categories.indexOfFirst { it.id == categoryId }
             spinnerCategory.setSelection(categoryIndex)
 
             editTextDate.setText(transaction.date.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")))

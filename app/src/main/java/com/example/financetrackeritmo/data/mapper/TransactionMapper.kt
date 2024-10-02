@@ -9,7 +9,7 @@ class TransactionMapper @Inject constructor() {
     fun mapTransactionDaoToTransaction (transactionEntity: TransactionDB): Transaction {
         return Transaction (
             id = transactionEntity.transactionId,
-            category = transactionEntity.category,
+            categoryId = transactionEntity.categoryId,
             amount = transactionEntity.amount,
             date = transactionEntity.date,
             note = transactionEntity.note
@@ -23,7 +23,7 @@ class TransactionMapper @Inject constructor() {
     fun mapTransactionToTransactionDao(transaction: Transaction): TransactionDB {
         return TransactionDB (
             transactionId = transaction.id,
-            category = transaction.category,
+            categoryId = transaction.categoryId,
             amount = transaction.amount,
             date = transaction.date,
             note = transaction.note
