@@ -1,9 +1,12 @@
 package com.example.financetrackeritmo.presentation.dashboard
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.financetrackeritmo.domain.usecase.GetAllCategoryUseCase
 import com.example.financetrackeritmo.domain.usecase.GetAllTransactionUseCase
+import com.example.financetrackeritmo.domain.usecase.GetExpenseUseCase
+import com.example.financetrackeritmo.domain.usecase.GetIncomeUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -16,7 +19,9 @@ import javax.inject.Inject
 @HiltViewModel
 class DashboardViewModel @Inject constructor(
     private val getAllCategoryUseCase: GetAllCategoryUseCase,
-    private val getAllTransactionUseCase: GetAllTransactionUseCase
+    private val getAllTransactionUseCase: GetAllTransactionUseCase,
+    private val getIncomeUseCase: GetIncomeUseCase,
+    private val getExpenseUseCase: GetExpenseUseCase
 ): ViewModel(){
 
     private val _uiState: MutableStateFlow<DashboardScreenState> = MutableStateFlow(
@@ -29,8 +34,10 @@ class DashboardViewModel @Inject constructor(
             combine(
                 getAllCategoryUseCase(),
                 getAllTransactionUseCase(),
-            ){ categories, transactions ->
-                DashboardScreenState.Success(categories, transactions, 3.0, 2.0) as DashboardScreenState
+                getIncomeUseCase(),
+                getExpenseUseCase()
+            ){ categories, transactions, income, expense ->
+                DashboardScreenState.Success(categories, transactions, income, expense) as DashboardScreenState
             }.onStart {
                 _uiState.value = DashboardScreenState.Loading
             }.collect{

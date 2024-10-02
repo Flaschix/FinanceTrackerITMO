@@ -2,9 +2,11 @@ package com.example.financetrackeritmo.data.repository
 
 import android.util.Log
 import com.example.financetrackeritmo.data.dao.CategoryDao
+import com.example.financetrackeritmo.data.dao.TransactionDao
 import com.example.financetrackeritmo.data.mapper.CategoryMapper
 import com.example.financetrackeritmo.domain.entity.Category
 import com.example.financetrackeritmo.domain.repository.CategoryRepository
+import com.example.financetrackeritmo.domain.repository.TransactionRepository
 import com.example.financetrackeritmo.utils.mergeWith
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -21,6 +23,8 @@ import javax.inject.Inject
 class CategoryRepositoryImpl @Inject constructor(
     private val mapper: CategoryMapper,
     private val categoryDao: CategoryDao,
+    private val transactionDao: TransactionDao,
+    private val transactionRepository: TransactionRepository
 ): CategoryRepository {
     private val coroutineScope = CoroutineScope(Dispatchers.Default)
 
@@ -65,11 +69,18 @@ class CategoryRepositoryImpl @Inject constructor(
     override suspend fun deleteCategory(category: Category): Result<Unit> {
         val item = mapper.mapCategoryToCategoryDao(category)
 
-        categoryDao.deleteCategory(item)
+        try {
+            transactionDao.deleteTransactionsByCategory(category.id)
+            categoryDao.deleteCategory(item)
+        } catch (e: Exception){
+            return Result.failure(Exception("Failed to delete"))
+        }
 
         _categoryList.removeIf { it.id == category.id }
 
         refreshedListFlow.emit(categoryList)
+
+        transactionRepository.refreshTransactions()
 
         return Result.success(Unit)
     }

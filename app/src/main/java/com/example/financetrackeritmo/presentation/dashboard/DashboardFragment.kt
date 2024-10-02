@@ -87,7 +87,7 @@ class DashboardFragment : Fragment() {
         }
 
         val categoryAmounts = filteredCategories.map { category ->
-            val totalAmount = transactionList.filter { it.categoryId== category.id }
+            val totalAmount = transactionList.filter { it.categoryId == category.id }
                 .sumOf { it.amount }
             val percentage = if (mode) {
                 (totalAmount / totalIncome) * 100

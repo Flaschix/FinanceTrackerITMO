@@ -12,4 +12,10 @@ interface TransactionRepository {
     suspend fun deleteTransaction(transaction: Transaction): Result<Unit>
 
     suspend fun updateTransaction(transaction: Transaction): Result<Unit>
+
+    suspend fun refreshTransactions(): Result<Unit>
+
+    suspend fun getIncome(): SharedFlow<Double>
+
+    suspend fun getExpense(): SharedFlow<Double>
 }
