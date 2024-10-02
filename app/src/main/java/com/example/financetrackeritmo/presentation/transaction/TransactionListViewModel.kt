@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.financetrackeritmo.domain.entity.Transaction
 import com.example.financetrackeritmo.domain.usecase.DeleteTransactionUseCase
 import com.example.financetrackeritmo.domain.usecase.GetAllTransactionUseCase
+import com.example.financetrackeritmo.domain.usecase.GetCategoryNameByIdUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -17,7 +18,8 @@ import javax.inject.Inject
 @HiltViewModel
 class TransactionListViewModel @Inject constructor(
     private val getAllTransactionUseCase: GetAllTransactionUseCase,
-    private val deleteTransactionUseCase: DeleteTransactionUseCase
+    private val deleteTransactionUseCase: DeleteTransactionUseCase,
+    private val getCategoryNameByIdUseCase: GetCategoryNameByIdUseCase
 ) : ViewModel() {
 
 
@@ -43,5 +45,9 @@ class TransactionListViewModel @Inject constructor(
         viewModelScope.launch {
             deleteTransactionUseCase(transaction)
         }
+    }
+
+    suspend fun getCategoryNameById(categoryId: Long): String {
+        return getCategoryNameByIdUseCase(categoryId = categoryId)
     }
 }

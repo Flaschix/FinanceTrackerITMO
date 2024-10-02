@@ -6,11 +6,13 @@ import com.example.financetrackeritmo.domain.entity.Category
 import com.example.financetrackeritmo.domain.entity.Transaction
 import com.example.financetrackeritmo.domain.usecase.AddTransactionUseCase
 import com.example.financetrackeritmo.domain.usecase.GetAllCategoryUseCase
+import com.example.financetrackeritmo.domain.usecase.GetCategoryNameByIdUseCase
 import com.example.financetrackeritmo.domain.usecase.UpdateTransactionUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
@@ -22,11 +24,15 @@ import javax.inject.Inject
 class TransactionViewModel @Inject constructor(
     private val addTransactionUseCase: AddTransactionUseCase,
     private val updateTransactionUseCase: UpdateTransactionUseCase,
-    private val getAllCategoryUseCase: GetAllCategoryUseCase
+    private val getAllCategoryUseCase: GetAllCategoryUseCase,
+    private val getCategoryNameByIdUseCase: GetCategoryNameByIdUseCase
 ) : ViewModel() {
 
     private val _validation = Channel<TransactionFieldsState>()
     val validateState = _validation.receiveAsFlow()
+
+    private val _operationSuccess = MutableStateFlow(false)
+    val operationSuccess = _operationSuccess.asStateFlow()
 
     private val _categories = MutableStateFlow<List<Category>>(emptyList())
     val categories: StateFlow<List<Category>> = _categories
@@ -53,6 +59,7 @@ class TransactionViewModel @Inject constructor(
                     )
                 )
                 if (result.isFailure) transactionError()
+                else _operationSuccess.value = true
 
             }
 
@@ -79,6 +86,7 @@ class TransactionViewModel @Inject constructor(
                     )
                 )
                 if (result.isFailure) transactionError()
+                else _operationSuccess.value = true
             }
 
         } else failedValidation(date, amount)
@@ -132,5 +140,4 @@ class TransactionViewModel @Inject constructor(
             )
         }
     }
-
 }

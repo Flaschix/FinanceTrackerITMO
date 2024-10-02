@@ -30,7 +30,7 @@ class TransactionListFragment : Fragment() {
     private val viewModel by viewModels<TransactionListViewModel>()
 
     private val transactionListAdapter by lazy {
-        TransactionListAdapter()
+        TransactionListAdapter(viewModel)
     }
 
     override fun onCreateView(
