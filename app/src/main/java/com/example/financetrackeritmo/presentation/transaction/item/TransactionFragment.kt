@@ -68,12 +68,14 @@ class TransactionFragment @Inject constructor() : Fragment() {
     }
 
     private fun updateSpinner(categories: List<Category>) {
-        val adapter = ArrayAdapter(
-            requireContext(),
-            android.R.layout.simple_spinner_item,
-            categories.map { it.name })
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        binding.spinnerCategory.adapter = adapter
+        if (binding.spinnerCategory.selectedItem == null) {
+            val adapter = ArrayAdapter(
+                requireContext(),
+                android.R.layout.simple_spinner_item,
+                categories.map { it.name })
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            binding.spinnerCategory.adapter = adapter
+        } 
     }
 
     private fun setUpView() {
@@ -100,7 +102,12 @@ class TransactionFragment @Inject constructor() : Fragment() {
 
                 Log.d("TEST", "category: $category")
 
-                if (category != null) viewModel.addNewTransaction(category, amount, dateString, note)
+                if (category != null) viewModel.addNewTransaction(
+                    category,
+                    amount,
+                    dateString,
+                    note
+                )
             }
         }
     }
@@ -164,9 +171,17 @@ class TransactionFragment @Inject constructor() : Fragment() {
 
     private fun setUpEditMode(transaction: Transaction) {
         binding.apply {
+            viewLifecycleOwner.lifecycleScope.launch {
+                viewModel.categories.collect { list ->
+                    categories = list
+                }
+            }
+            updateSpinner(categories)
             val categoryId = transaction.categoryId
             val categoryIndex = categories.indexOfFirst { it.id == categoryId }
-            spinnerCategory.setSelection(categoryIndex)
+            if (categoryIndex != -1) {
+                spinnerCategory.setSelection(categoryIndex)
+            }
 
             editTextDate.setText(transaction.date.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")))
             editAmount.setText(transaction.amount.toString())

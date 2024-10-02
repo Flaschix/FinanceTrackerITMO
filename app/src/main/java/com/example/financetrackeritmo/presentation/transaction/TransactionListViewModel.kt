@@ -32,7 +32,7 @@ class TransactionListViewModel @Inject constructor(
     init {
         viewModelScope.launch {
             getAllTransactionUseCase().map {
-                TransactionListScreenState.Success(it) as TransactionListScreenState
+                TransactionListScreenState.Success(it)
             }.onStart {
                 _uiState.value = TransactionListScreenState.Loading
             }.collect {

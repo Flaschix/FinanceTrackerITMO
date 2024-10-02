@@ -25,7 +25,6 @@ class TransactionViewModel @Inject constructor(
     private val addTransactionUseCase: AddTransactionUseCase,
     private val updateTransactionUseCase: UpdateTransactionUseCase,
     private val getAllCategoryUseCase: GetAllCategoryUseCase,
-    private val getCategoryNameByIdUseCase: GetCategoryNameByIdUseCase
 ) : ViewModel() {
 
     private val _validation = Channel<TransactionFieldsState>()
