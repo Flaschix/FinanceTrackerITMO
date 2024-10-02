@@ -1,5 +1,6 @@
 package com.example.financetrackeritmo.presentation.dashboard
 
+import android.graphics.Color
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -10,17 +11,17 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.financetrackeritmo.R
 import com.example.financetrackeritmo.databinding.FragmentDashboardBinding
 import com.example.financetrackeritmo.domain.entity.Category
 import com.example.financetrackeritmo.domain.entity.Transaction
 import com.example.financetrackeritmo.domain.entity.TransactionType
-import com.example.financetrackeritmo.presentation.category.CategoryListFragmentDirections
+import com.github.mikephil.charting.data.PieData
+import com.github.mikephil.charting.data.PieDataSet
+import com.github.mikephil.charting.data.PieEntry
+import com.github.mikephil.charting.utils.ColorTemplate
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -65,7 +66,11 @@ class DashboardFragment : Fragment() {
 
                             setUpRV()
 
-                            setUpView(it.totalIncome, it.totalExpense, it.categories, it.transactions, it.isIncomeMode)
+                            fillRV(it.totalIncome, it.totalExpense, it.categories, it.transactions, it.isIncomeMode)
+
+                            setUpView(it.totalIncome, it.totalExpense, it.isIncomeMode)
+
+                            setUpPieChart(it.totalIncome, it.totalExpense, it.categories, it.transactions, it.isIncomeMode)
                         }
                     }
 
@@ -75,6 +80,24 @@ class DashboardFragment : Fragment() {
     }
 
     private fun setUpView(
+        totalIncome: Double,
+        totalExpense: Double,
+        mode: Boolean
+    ) {
+        binding.switchMode.isChecked = mode
+
+        binding.switchMode.setOnCheckedChangeListener { _, isChecked ->
+            viewModel.switchMode()
+        }
+
+        binding.tvTotalAmount.text = if (mode) {
+            "Total Income: ${totalIncome}"
+        } else {
+            "Total Expense: ${totalExpense}"
+        }
+    }
+
+    private fun fillRV(
         totalIncome: Double,
         totalExpense: Double,
         categoryList: List<Category>,
@@ -100,6 +123,37 @@ class DashboardFragment : Fragment() {
         dashboardAdapter.submitList(categoryAmounts)
     }
 
+    private fun setUpPieChart(
+        totalIncome: Double,
+        totalExpense: Double,
+        categoryList: List<Category>,
+        transactionList: List<Transaction>,
+        mode: Boolean
+    ) {
+        val filteredCategories = categoryList.filter {
+            it.type == if (mode) TransactionType.INCOME else TransactionType.EXPENSE
+        }
+
+        val pieEntries = filteredCategories.map { category ->
+            val totalAmount = transactionList.filter { it.categoryId == category.id }
+                .sumOf { it.amount }
+            PieEntry(totalAmount.toFloat(), category.name)
+        }
+
+        val pieDataSet = PieDataSet(pieEntries, "Categories")
+        pieDataSet.colors = ColorTemplate.MATERIAL_COLORS.toList()
+        pieDataSet.valueTextColor = Color.BLACK
+        pieDataSet.valueTextSize = 12f
+
+        val pieData = PieData(pieDataSet)
+
+        binding.pieChart.data = pieData
+        binding.pieChart.description.isEnabled = false
+        binding.pieChart.isDrawHoleEnabled = false
+        binding.pieChart.setUsePercentValues(true)
+        binding.pieChart.invalidate() // refresh
+    }
+
     private fun setUpRV() {
         binding.rvDashboard.apply {
             layoutManager = LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
@@ -112,6 +166,7 @@ class DashboardFragment : Fragment() {
             pbDashboard.visibility = View.GONE
             tvTotalAmount.visibility = View.VISIBLE
             switchMode.visibility = View.VISIBLE
+            pieChart.visibility = View.VISIBLE
             rvDashboard.visibility = View.VISIBLE
         }
     }
@@ -121,6 +176,7 @@ class DashboardFragment : Fragment() {
             pbDashboard.visibility = View.VISIBLE
             tvTotalAmount.visibility = View.GONE
             switchMode.visibility = View.GONE
+            pieChart.visibility = View.GONE
             rvDashboard.visibility = View.GONE
         }
     }

@@ -1,6 +1,5 @@
 package com.example.financetrackeritmo.data.repository
 
-import android.util.Log
 import com.example.financetrackeritmo.data.dao.CategoryDao
 import com.example.financetrackeritmo.data.dao.TransactionDao
 import com.example.financetrackeritmo.data.mapper.CategoryMapper
@@ -14,10 +13,8 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.shareIn
-import kotlinx.coroutines.flow.stateIn
 import javax.inject.Inject
 
 class CategoryRepositoryImpl @Inject constructor(
@@ -92,13 +89,12 @@ class CategoryRepositoryImpl @Inject constructor(
 
         val item = mapper.mapCategoryToCategoryDao(category)
 
-        Log.d("TEST", "category $category")
-        Log.d("TEST", "item $item")
-
         categoryDao.updateCategory(item)
 
         _categoryList.replaceAll { if (it.id == category.id) category else it }
         refreshedListFlow.emit(categoryList)
+
+        transactionRepository.refreshTransactions()
 
         return Result.success(Unit)
     }
