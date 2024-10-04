@@ -5,6 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/beige"
     tools:context=".MainActivity">
 
     <fragment
@@ -22,15 +23,20 @@
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigation"
         android:layout_width="match_parent"
-        android:layout_height="70dp"
+        android:layout_height="80dp"
+        android:background="@color/light_orange"
         android:elevation="0dp"
-        app:itemPaddingBottom="10dp"
-        app:itemPaddingTop="10dp"
-        app:itemRippleColor="@color/white"
-        app:labelVisibilityMode="unlabeled"
+        app:itemPaddingBottom="5dp"
+        app:itemPaddingTop="5dp"
+        app:labelVisibilityMode="labeled"
+        app:itemTextColor="@drawable/bottom_nav_color"
+        app:itemIconSize="40dp"
+        app:itemIconTint="@drawable/bottom_nav_color"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:menu="@menu/bottom_nav_menu" />
+        app:menu="@menu/bottom_nav_menu"
+        style="@style/bottom_nav_style"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
