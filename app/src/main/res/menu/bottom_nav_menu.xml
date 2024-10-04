@@ -3,7 +3,7 @@
     <item
         android:id="@+id/transactionListFragment"
         android:icon="@drawable/transaction_icon"
-        android:title="@string/transaction"
+        android:title="@string/transactions"
         android:enabled="true"
         />
 
@@ -17,7 +17,7 @@
     <item
         android:icon="@drawable/category_icon"
         android:id="@+id/categoryListFragment"
-        android:title="@string/category"
+        android:title="@string/categories"
         android:enabled="true"
         />
 </menu>
