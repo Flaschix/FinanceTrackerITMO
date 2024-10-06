@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.example.financetrackeritmo.databinding.RvCategoryListBinding
 import com.example.financetrackeritmo.domain.entity.Category
+import com.example.financetrackeritmo.domain.entity.TransactionType
 import com.example.financetrackeritmo.presentation.category.item.CategoryDiffCallback
 
 
@@ -20,7 +21,7 @@ class CategoryListAdapter: ListAdapter<Category, CategoryListAdapter.CategoryLis
         fun bind(category: Category){
             binding.apply {
                 tvName.text = category.name
-                tvType.text = category.type.toString()
+                tvType.text = if (category.type == TransactionType.INCOME) "Доходы" else "Расходы"
             }
         }
     }

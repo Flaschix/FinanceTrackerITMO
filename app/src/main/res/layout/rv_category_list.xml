@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginHorizontal="20dp"
     android:background="@drawable/rectangle"
     android:layout_marginVertical="5dp"
     android:orientation="horizontal">
@@ -11,9 +12,9 @@
     <TextView
         android:id="@+id/tvName"
         style="@style/text1_style"
-        android:layout_width="140dp"
+        android:layout_width="145dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="30dp"
+        android:layout_marginStart="20dp"
         android:layout_marginVertical="10dp"
         android:layout_gravity="center_vertical"
         android:textAlignment="textStart"
@@ -23,10 +24,12 @@
     <TextView
         android:id="@+id/tvType"
         style="@style/text1_style"
-        android:layout_width="100dp"
+        android:layout_width="70dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="50dp"
         android:layout_gravity="center_vertical"
+        android:gravity="center"
         android:layout_marginVertical="10dp"
         android:text="@string/expenses"
         />
@@ -35,7 +38,7 @@
         android:id="@+id/imgEdit"
         android:layout_width="20dp"
         android:layout_height="20dp"
-        android:layout_marginStart="20dp"
+        android:layout_marginEnd="10dp"
         android:layout_marginVertical="10dp"
         android:layout_gravity="center_vertical"
         app:srcCompat="@drawable/edit_icon" />
@@ -44,9 +47,8 @@
         android:id="@+id/imgDelete"
         android:layout_width="20dp"
         android:layout_height="20dp"
-        android:layout_marginStart="10dp"
         android:layout_marginVertical="10dp"
-        android:layout_marginEnd="30dp"
+        android:layout_marginEnd="20dp"
         android:layout_gravity="center_vertical"
         app:srcCompat="@drawable/delete_icon" />
 

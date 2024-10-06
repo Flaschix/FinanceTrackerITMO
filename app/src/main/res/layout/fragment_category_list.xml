@@ -20,38 +20,42 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginVertical="10dp">
 
         <TextView
             android:id="@+id/textView3"
             style="@style/text_title3_style"
-            android:layout_width="wrap_content"
+            android:layout_width="145dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="45dp"
+            android:layout_marginStart="20dp"
             android:text="@string/category" />
 
         <TextView
             android:id="@+id/textView4"
             style="@style/text_title3_style"
-            android:layout_width="wrap_content"
+            android:layout_width="70dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="110dp"
+            android:layout_marginStart="20dp"
+            android:gravity="center"
             android:text="@string/type" />
 
     </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvCategoryList"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:listitem="@layout/rv_category_list" />
 
     <ProgressBar
         android:id="@+id/pbCategory"
         style="?android:attr/progressBarStyle"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:scaleX="0.2"
+        android:scaleY="0.2"
         android:visibility="gone" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvCategoryList"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="16dp"
-        tools:listitem="@layout/rv_category_list" />
 
 </LinearLayout>

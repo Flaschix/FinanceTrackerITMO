@@ -13,7 +13,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
-        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="10dp"
         android:text="@string/category_type" />
 
     <androidx.appcompat.widget.SwitchCompat
@@ -22,18 +24,19 @@
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_gravity="center_vertical"
-        android:textSize="60sp"
+        android:elegantTextHeight="false"
         android:scaleX="0.7"
         android:scaleY="0.7"
-        android:elegantTextHeight="false"
         android:textColor="@color/beige"
         android:textOff="@string/expense"
         android:textOn="@string/income"
+        android:textSize="60sp"
         android:thumb="@drawable/custom_thumb"
         app:showText="true"
         app:thumbTint="@color/orange"
         app:track="@drawable/custom_track"
-        app:trackTint="@color/light_green" />
+        app:trackTint="@color/light_green"
+        tools:ignore="TouchTargetSizeCheck" />
 
     <TextView
         android:id="@+id/textView3"
@@ -44,21 +47,26 @@
         android:layout_marginTop="20dp"
         android:text="@string/category_name" />
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_marginHorizontal="10dp"
-        app:boxStrokeColor="@color/dark_blue"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <com.google.android.material.textfield.TextInputEditText
-            android:textColor="@color/dark_blue"
-            android:id="@+id/tiedName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginVertical="20dp"
-            android:hint="@string/enter_category_name"
-            />
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginHorizontal="20dp"
+        android:background="@drawable/edit_border"
+        android:orientation="horizontal">
 
-    </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/tiedName"
+            style="@style/text1_style"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:background="@android:color/transparent"
+            android:hint="@string/enter_category_name"
+            android:textColorHint="@color/blue" />
+
+    </RelativeLayout>
 
 
     <Button
