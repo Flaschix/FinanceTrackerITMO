@@ -16,7 +16,7 @@
 
     <style name="text_title2_style">
         <item name="android:textSize">20sp</item>
-        <item name="android:gravity">center</item>
+<!--        <item name="android:gravity">center</item>-->
         <item name="android:fontFamily">sans-serif-medium</item>
 <!--        <item name="android:layout_marginVertical">10dp</item>-->
         <item name="android:textColor">@color/beige</item>
@@ -25,7 +25,7 @@
 
     <style name="text_title3_style">
         <item name="android:textSize">15sp</item>
-        <item name="android:gravity">center</item>
+<!--        <item name="android:gravity">center</item>-->
         <item name="android:fontFamily">sans-serif-medium</item>
 <!--        <item name="android:layout_marginVertical">10dp</item>-->
         <item name="android:textColor">@color/dark_blue</item>
@@ -34,7 +34,7 @@
 
     <style name="text1_style">
         <item name="android:textSize">15sp</item>
-        <item name="android:gravity">center</item>
+<!--        <item name="android:gravity">center</item>-->
         <item name="android:fontFamily">sans-serif-medium</item>
 <!--        <item name="android:layout_marginVertical">10dp</item>-->
         <item name="android:textColor">@color/dark_blue</item>
