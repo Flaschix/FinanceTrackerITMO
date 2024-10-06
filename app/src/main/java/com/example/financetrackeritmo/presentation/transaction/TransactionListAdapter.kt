@@ -1,5 +1,6 @@
 package com.example.financetrackeritmo.presentation.transaction
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.lifecycle.viewModelScope
@@ -23,11 +24,16 @@ class TransactionListAdapter(
     inner class TransactionListViewHolder(
         val binding: RvTransactionListBinding,
     ) : ViewHolder(binding.root) {
+        @SuppressLint("SetTextI18n")
         fun bind(transaction: Transaction) {
             binding.apply {
                 viewModel.viewModelScope.launch {
                     categoryName.text = viewModel.getCategoryNameById(transaction.categoryId)
-                    transactionDate.text = transaction.date.toString()
+                    val parts = transaction.date.toString().split("-")
+                    val year = parts[0].takeLast(2)
+                    val month = parts[1]
+                    val day = parts[2]
+                    transactionDate.text = "$day/$month/$year"
                     transactionAmount.text = transaction.amount.toString()
                 }
             }
