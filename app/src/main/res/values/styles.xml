@@ -34,6 +34,13 @@
         <item name="android:textStyle">bold</item>
     </style>
 
+    <style name="text_title5_style">
+        <item name="android:textSize">25sp</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:textColor">@color/beige</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
     <style name="text1_style">
         <item name="android:textSize">15sp</item>
         <item name="android:fontFamily">sans-serif-medium</item>

@@ -21,10 +21,9 @@
     <androidx.appcompat.widget.SwitchCompat
         android:id="@+id/switchType"
         style="@style/text_title2_style"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="40dp"
-        android:layout_gravity="center_vertical"
-        android:elegantTextHeight="false"
+        android:layout_gravity="center"
         android:scaleX="0.7"
         android:scaleY="0.7"
         android:textColor="@color/beige"

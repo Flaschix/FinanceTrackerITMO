@@ -20,7 +20,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 //        enableEdgeToEdge()
         setContentView(binding.root)
-
+        setSupportActionBar(findViewById(R.id.toolbar))
         val navController = findNavController(R.id.appHostFragment)
         binding.bottomNavigation.setupWithNavController(navController)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->

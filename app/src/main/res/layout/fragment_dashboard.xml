@@ -11,16 +11,13 @@
     <androidx.appcompat.widget.SwitchCompat
         android:id="@+id/switchMode"
         style="@style/text_title2_style"
-        android:layout_width="360dp"
+        android:layout_width="wrap_content"
         android:layout_height="60dp"
-        android:layout_marginStart="50dp"
         android:layout_marginTop="30dp"
-        android:layout_marginEnd="50dp"
-        android:elegantTextHeight="false"
         android:textColor="@color/beige"
         android:textOff="@string/expense"
         android:textOn="@string/income"
-        android:textSize="30sp"
+        android:textSize="40sp"
         android:thumb="@drawable/custom_thumb"
         app:showText="true"
         app:thumbTint="@color/orange"
@@ -38,7 +35,7 @@
     <com.github.mikephil.charting.charts.PieChart
         android:id="@+id/pieChart"
         android:layout_width="match_parent"
-        android:layout_height="300dp"
+        android:layout_height="250dp"
         android:layout_margin="20dp" />
 
     <TextView
