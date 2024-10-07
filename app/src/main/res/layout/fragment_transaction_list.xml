@@ -36,7 +36,7 @@
         <TextView
             android:id="@+id/textView3"
             style="@style/text_title3_style"
-            android:layout_width="95dp"
+            android:layout_width="80dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:text="@string/category" />
@@ -54,7 +54,7 @@
         <TextView
             android:id="@+id/textView5"
             style="@style/text_title3_style"
-            android:layout_width="85dp"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="@string/amount" />

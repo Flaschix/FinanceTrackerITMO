@@ -93,9 +93,9 @@ class DashboardFragment : Fragment() {
         }
 
         binding.tvTotalAmount.text = if (mode) {
-            "Total Income: ${totalIncome}"
+            "Общие доходы: ${totalIncome} ₽"
         } else {
-            "Total Expense: ${totalExpense}"
+            "Общие расходы: ${totalExpense} ₽"
         }
     }
 
@@ -183,6 +183,7 @@ class DashboardFragment : Fragment() {
             switchMode.visibility = View.VISIBLE
             pieChart.visibility = View.VISIBLE
             rvDashboard.visibility = View.VISIBLE
+            textView2.visibility = View.VISIBLE
         }
     }
 
@@ -193,6 +194,7 @@ class DashboardFragment : Fragment() {
             switchMode.visibility = View.GONE
             pieChart.visibility = View.GONE
             rvDashboard.visibility = View.GONE
+            textView2.visibility = View.GONE
         }
     }
 

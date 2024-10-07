@@ -17,9 +17,7 @@
         android:layout_marginStart="20dp"
         android:layout_marginVertical="10dp"
         android:layout_gravity="center_vertical"
-        android:textAlignment="textStart"
-        android:text="@string/category"
-        tools:ignore="RtlCompat" />
+        android:text="@string/category" />
 
     <TextView
         android:id="@+id/tvType"

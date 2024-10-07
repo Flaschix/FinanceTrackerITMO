@@ -1,5 +1,6 @@
 package com.example.financetrackeritmo.presentation.dashboard
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
@@ -12,11 +13,12 @@ class DashboardAdapter: ListAdapter<CategoryAmount, DashboardAdapter.DashboardVi
 ) {
 
     inner class DashboardViewHolder(val binding: RvDashboardBinding): ViewHolder(binding.root){
+        @SuppressLint("DefaultLocale", "SetTextI18n")
         fun bind(categoryAmount: CategoryAmount){
             binding.apply {
                 tvCategoryName.text = categoryAmount.name
-                tvCategoryAmount.text = categoryAmount.amount.toString()
-                tvCategoryPercentage.text = categoryAmount.percentage.toString()
+                tvCategoryAmount.text = categoryAmount.amount.toString() + " ₽"
+                tvCategoryPercentage.text = String.format("%.2f", categoryAmount.percentage) + "%"
             }
         }
     }

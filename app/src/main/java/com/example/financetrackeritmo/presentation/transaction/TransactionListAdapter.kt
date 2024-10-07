@@ -34,7 +34,7 @@ class TransactionListAdapter(
                     val month = parts[1]
                     val day = parts[2]
                     transactionDate.text = "$day/$month/$year"
-                    transactionAmount.text = transaction.amount.toString()
+                    transactionAmount.text = transaction.amount.toString() + " ₽"
                 }
             }
         }
