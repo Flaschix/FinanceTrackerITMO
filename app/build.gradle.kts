@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.ksp)
     alias(libs.plugins.hilt)
     alias(libs.plugins.androidx.navigation.safeargs)
+    alias(libs.plugins.kotlin.parcelize)
 }
 
 android {
@@ -36,6 +37,10 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+
+    buildFeatures{
+        viewBinding = true
+    }
 }
 
 dependencies {
@@ -60,4 +65,7 @@ dependencies {
     //Navigation
     implementation (libs.androidx.navigation.fragment.ktx)
     implementation (libs.navigation.ui.ktx)
+
+    //charts
+    implementation(libs.mpAndroidChart)
 }

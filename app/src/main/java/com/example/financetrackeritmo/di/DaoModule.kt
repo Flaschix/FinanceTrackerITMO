@@ -3,6 +3,7 @@ package com.example.financetrackeritmo.di
 import android.content.Context
 import androidx.room.Room
 import com.example.financetrackeritmo.data.dao.CategoryDao
+import com.example.financetrackeritmo.data.dao.TransactionDao
 import com.example.financetrackeritmo.data.db.TrackerDatabase
 import dagger.Module
 import dagger.Provides
@@ -17,17 +18,23 @@ object DaoModule {
 
     @Provides
     @Singleton
-    fun provideCategoryDatabase(@ApplicationContext context: Context): TrackerDatabase{
+    fun provideTrackerDatabase(@ApplicationContext context: Context): TrackerDatabase{
         return Room.databaseBuilder(
             context,
             TrackerDatabase::class.java,
             "trackerDatabase.db"
-        ).build()
+        ).fallbackToDestructiveMigration().build()
     }
 
     @Provides
     @Singleton
     fun provideCategoryDao(trackerDatabase: TrackerDatabase): CategoryDao{
         return trackerDatabase.getCategoryDao()
+    }
+
+    @Provides
+    @Singleton
+    fun provideTransactionDao(trackerDatabase: TrackerDatabase): TransactionDao {
+        return trackerDatabase.getTransactionDao()
     }
 }

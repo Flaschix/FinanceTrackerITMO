@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/beige"
+    android:orientation="vertical"
+    tools:context=".presentation.category.CategoryListFragment">
+
+    <Button
+        style="@style/text_title2_style"
+        android:id="@+id/btnNewTransaction"
+        android:layout_width="225dp"
+        android:layout_height="60dp"
+        android:layout_gravity="center"
+        android:layout_margin="20dp"
+        android:backgroundTint="@color/light_green"
+        android:text="@string/new_category"
+        android:textColor="@color/beige" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginVertical="10dp">
+
+        <TextView
+            android:id="@+id/textView3"
+            style="@style/text_title3_style"
+            android:layout_width="145dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:text="@string/category" />
+
+        <TextView
+            android:id="@+id/textView4"
+            style="@style/text_title3_style"
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:gravity="center"
+            android:text="@string/type" />
+
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvCategoryList"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:listitem="@layout/rv_category_list" />
+
+    <ProgressBar
+        android:id="@+id/pbCategory"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleX="0.2"
+        android:scaleY="0.2"
+        android:visibility="gone" />
+
+</LinearLayout>

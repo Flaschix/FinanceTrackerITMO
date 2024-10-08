@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/transactionListFragment"
+        android:icon="@drawable/transaction_icon"
+        android:title="@string/transactions"
+        android:enabled="true"
+        />
+
+    <item
+        android:icon="@drawable/dashboard_icon"
+        android:id="@+id/dashboardFragment"
+        android:title="@string/dashboard"
+        android:enabled="true"
+        />
+
+    <item
+        android:icon="@drawable/category_icon"
+        android:id="@+id/categoryListFragment"
+        android:title="@string/categories"
+        android:enabled="true"
+        />
+</menu>

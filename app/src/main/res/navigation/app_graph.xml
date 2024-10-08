@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/app_graph"
+    app:startDestination="@id/dashboardFragment">
+
+    <fragment
+        android:id="@+id/dashboardFragment"
+        android:name="com.example.financetrackeritmo.presentation.dashboard.DashboardFragment"
+        android:label="@string/dashboard"
+        tools:layout="@layout/fragment_dashboard" />
+    <fragment
+        android:id="@+id/categoryListFragment"
+        android:name="com.example.financetrackeritmo.presentation.category.CategoryListFragment"
+        android:label="@string/categories"
+        tools:layout="@layout/fragment_category_list" >
+        <action
+            android:id="@+id/action_categoryListFragment_to_categoryFragment"
+            app:destination="@id/categoryFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/categoryFragment"
+        android:name="com.example.financetrackeritmo.presentation.category.item.CategoryFragment"
+        android:label="@string/create_category"
+        tools:layout="@layout/fragment_category" >
+        <argument
+            android:name="category"
+            app:argType="com.example.financetrackeritmo.domain.entity.Category"
+            app:nullable="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/transactionFragment"
+        android:name="com.example.financetrackeritmo.presentation.transaction.item.TransactionFragment"
+        android:label="@string/create_transaction"
+        tools:layout="@layout/fragment_transaction" >
+        <argument
+            android:name="transaction"
+            app:argType="com.example.financetrackeritmo.domain.entity.Transaction"
+            app:nullable="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/transactionListFragment"
+        android:name="com.example.financetrackeritmo.presentation.transaction.TransactionListFragment"
+        android:label="@string/transactions"
+        tools:layout="@layout/fragment_transaction_list" >
+        <action
+            android:id="@+id/action_transactionListFragment_to_transactionFragment"
+            app:destination="@id/transactionFragment" />
+    </fragment>
+</navigation>
