@@ -142,7 +142,7 @@ class DashboardFragment : Fragment() {
             PieEntry(totalAmount.toFloat(), category.name)
         }
 
-        val pieDataSet = PieDataSet(pieEntries, "")
+        val pieDataSet = PieDataSet(pieEntries.filter { it.value > 0 }, "")
         pieDataSet.colors = ColorTemplate.MATERIAL_COLORS.toList()
         pieDataSet.valueTextColor = Color.BLACK
         pieDataSet.valueTextSize = 15f

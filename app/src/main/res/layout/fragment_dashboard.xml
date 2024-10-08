@@ -20,6 +20,7 @@
         android:textSize="40sp"
         android:thumb="@drawable/custom_thumb"
         app:showText="true"
+        app:switchTextAppearance="@style/SwitchTextAppearance"
         app:thumbTint="@color/orange"
         app:track="@drawable/custom_track"
         app:trackTint="@color/light_green" />

@@ -14,6 +14,9 @@
     <string name="category_example">Категория</string>
     <string name="expenses">Расходы</string>
 
+    <string name="create_category">Создание категории</string>
+    <string name="create_transaction">Создание транзакции</string>
+
     <string name="new_transaction">+ Новая транзакция</string>
     <string name="date">Дата</string>
     <string name="amount">Сумма</string>

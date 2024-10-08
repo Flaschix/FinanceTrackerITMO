@@ -8,12 +8,12 @@
     <fragment
         android:id="@+id/dashboardFragment"
         android:name="com.example.financetrackeritmo.presentation.dashboard.DashboardFragment"
-        android:label="fragment_dashboard"
+        android:label="@string/dashboard"
         tools:layout="@layout/fragment_dashboard" />
     <fragment
         android:id="@+id/categoryListFragment"
         android:name="com.example.financetrackeritmo.presentation.category.CategoryListFragment"
-        android:label="fragment_category"
+        android:label="@string/categories"
         tools:layout="@layout/fragment_category_list" >
         <action
             android:id="@+id/action_categoryListFragment_to_categoryFragment"
@@ -22,7 +22,7 @@
     <fragment
         android:id="@+id/categoryFragment"
         android:name="com.example.financetrackeritmo.presentation.category.item.CategoryFragment"
-        android:label="fragment_category"
+        android:label="@string/create_category"
         tools:layout="@layout/fragment_category" >
         <argument
             android:name="category"
@@ -32,7 +32,7 @@
     <fragment
         android:id="@+id/transactionFragment"
         android:name="com.example.financetrackeritmo.presentation.transaction.item.TransactionFragment"
-        android:label="fragment_transaction"
+        android:label="@string/create_transaction"
         tools:layout="@layout/fragment_transaction" >
         <argument
             android:name="transaction"
@@ -42,7 +42,7 @@
     <fragment
         android:id="@+id/transactionListFragment"
         android:name="com.example.financetrackeritmo.presentation.transaction.TransactionListFragment"
-        android:label="fragment_transaction_list"
+        android:label="@string/transactions"
         tools:layout="@layout/fragment_transaction_list" >
         <action
             android:id="@+id/action_transactionListFragment_to_transactionFragment"

@@ -10,16 +10,17 @@
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
-        style="@style/text_title5_style"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         app:titleTextColor="@color/beige"
         android:textAlignment="center"
         android:background="@color/dark_blue"
         android:minHeight="?attr/actionBarSize"
-        android:theme="?attr/actionBarTheme"
+        android:elevation="4dp"
+        app:titleTextAppearance="@style/ToolbarTitleTextAppearance"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:theme="@style/AppTheme"/>
 
     <fragment
         android:id="@+id/appHostFragment"

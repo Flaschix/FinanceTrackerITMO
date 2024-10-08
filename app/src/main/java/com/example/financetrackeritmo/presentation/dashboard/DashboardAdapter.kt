@@ -18,7 +18,8 @@ class DashboardAdapter: ListAdapter<CategoryAmount, DashboardAdapter.DashboardVi
             binding.apply {
                 tvCategoryName.text = categoryAmount.name
                 tvCategoryAmount.text = categoryAmount.amount.toString() + " ₽"
-                tvCategoryPercentage.text = String.format("%.2f", categoryAmount.percentage) + "%"
+                tvCategoryPercentage.text = if(categoryAmount.percentage > 0)
+                    String.format("%.2f", categoryAmount.percentage) + "%" else "0%"
             }
         }
     }

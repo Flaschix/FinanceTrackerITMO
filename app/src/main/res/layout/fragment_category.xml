@@ -31,6 +31,7 @@
         android:textOn="@string/income"
         android:textSize="60sp"
         android:thumb="@drawable/custom_thumb"
+        app:switchTextAppearance="@style/SwitchTextAppearance"
         app:showText="true"
         app:thumbTint="@color/orange"
         app:track="@drawable/custom_track"
