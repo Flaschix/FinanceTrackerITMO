@@ -1,5 +1,6 @@
 package com.example.financetrackeritmo
 
+import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.view.View
 import androidx.activity.enableEdgeToEdge
@@ -23,8 +24,14 @@ class MainActivity : AppCompatActivity() {
         ActivityMainBinding.inflate(layoutInflater)
     }
 
+    override fun onStart() {
+        super.onStart()
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
 //        enableEdgeToEdge()
         setContentView(binding.root)
 
