@@ -1,5 +1,41 @@
 <resources>
     <string name="app_name">FinanceTrackerITMO</string>
+
+    <string name="expense">Расходы</string>
+    <string name="income">Доходы</string>
+
+    <string name="categories">Категории</string>
+    <string name="transactions">Транзакции</string>
+    <string name="dashboard">Главная</string>
+
+    <string name="new_category">+ Новая категория</string>
+    <string name="category">Категория</string>
+    <string name="type">Тип</string>
+    <string name="category_example">Категория</string>
+    <string name="expenses">Расходы</string>
+
+    <string name="create_category">Создание категории</string>
+    <string name="create_transaction">Создание транзакции</string>
+
+    <string name="new_transaction">+ Новая транзакция</string>
+    <string name="date">Дата</string>
+    <string name="amount">Сумма</string>
+    <string name="comment">Комментарий</string>
+
+    <string name="date_example">00/00/00</string>
+    <string name="amount_example">0000000.00 ₽</string>
+    <string name="percentages_example">100.00%</string>
+
+    <string name="category_name">Название</string>
+    <string name="category_type">Тип категории</string>
+    <string name="enter_category_name">Введите название категории</string>
+
+    <string name="select_date">Выберите дату</string>
+    <string name="enter_amount">Введите сумму</string>
+    <string name="enter_comment">Введите комментарий</string>
+
+    <string name="save">Сохранить</string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
